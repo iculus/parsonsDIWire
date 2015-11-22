@@ -1,0 +1,9 @@
+In Grasshopper, function to grab control points in a list, output to text file
+
+python
+open text file
+convert points to list
+do math to calculate vectors 
+save list of vectors as text file
+
+in Processing, open text file and execute
