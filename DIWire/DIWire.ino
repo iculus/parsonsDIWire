@@ -59,6 +59,7 @@ const int feedMotorDir = 8;
 //misc program constants
 const int pulseWidth = 20;
 const int pulseDelay = 700;
+const int zPulseDelay = 200;
 
 // Drive directions in english
 boolean ccw = true; // counter-clockwise drive direction

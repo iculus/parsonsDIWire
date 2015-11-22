@@ -12,10 +12,13 @@ void zbend (float angle) { //rotates z motor
     rotations = angle;
     digitalWrite (zMotorDir, dir);  //sets motor direction
     for (int i=0; i <=rotations  ; i++){ //rotates z motor appropriate number of steps
-      digitalWrite(zMotorPls, HIGH);
-      delayMicroseconds (pulseWidth);
-      digitalWrite(zMotorPls, LOW);
-      delayMicroseconds (2000);
+      
+      //digitalWrite(zMotorPls, HIGH);
+      //delayMicroseconds (pulseWidth);
+      //digitalWrite(zMotorPls, LOW);
+      //delayMicroseconds (zPulseDelay);
+
+      moveMotor(zMotorPls, pulseWidth, zPulseDelay);
     }
   }
 }
