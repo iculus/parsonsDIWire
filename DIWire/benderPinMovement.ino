@@ -25,24 +25,24 @@ void bend (float angle) {     //bender pin movement
     rotations = angle;
     // Serial.println (angle);
     digitalWrite (bendMotorDir, dir);  
-    for (int i=0; i <=rotations  ; i++){ //moves bender bin the desired angle
+    //for (int i=0; i <=rotations  ; i++){ //moves bender bin the desired angle
       
       //digitalWrite(bendMotorPls, HIGH);
       //delayMicroseconds (pulseWidth);
       //digitalWrite(bendMotorPls, LOW);
       //delayMicroseconds (pulseDelay);
 
-      moveMotor(bendMotorPls, pulseWidth, pulseDelay);
-    }
+    moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+   // }
     delay (100);
     digitalWrite (bendMotorDir, back);   //moves bender pin back to home position ready for next feed
-    for (int i=0; i <=rotations  ; i++){
+    //for (int i=0; i <=rotations  ; i++){
       //digitalWrite(bendMotorPls, HIGH);
       //delayMicroseconds (pulseWidth);
       //digitalWrite(bendMotorPls, LOW);
       //delayMicroseconds (pulseDelay);
 
-      moveMotor(bendMotorPls, pulseWidth, pulseDelay);
-    }
+    moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+    //}
   }
 }

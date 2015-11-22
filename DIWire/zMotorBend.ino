@@ -11,15 +11,15 @@ void zbend (float angle) { //rotates z motor
     angle = (2000 * angle)/360; //converts angle to motor steps
     rotations = angle;
     digitalWrite (zMotorDir, dir);  //sets motor direction
-    for (int i=0; i <=rotations  ; i++){ //rotates z motor appropriate number of steps
+    //for (int i=0; i <=rotations  ; i++){ //rotates z motor appropriate number of steps
       
       //digitalWrite(zMotorPls, HIGH);
       //delayMicroseconds (pulseWidth);
       //digitalWrite(zMotorPls, LOW);
       //delayMicroseconds (zPulseDelay);
 
-      moveMotor(zMotorPls, pulseWidth, zPulseDelay);
-    }
+    moveMotor(zMotorPls, pulseWidth, zPulseDelay, rotations);
+    //}
   }
 }
 

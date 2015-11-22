@@ -4,14 +4,14 @@ void rotatePin (boolean dir, float angle) { //moves bender pin during duck. dire
   rotations = angle;
   Serial.println (dir);
   digitalWrite (bendMotorDir, dir);  
-  for (int i=0; i <=rotations  ; i++){ //rotates bender motor appropriate number of steps
+  //for (int i=0; i <=rotations  ; i++){ //rotates bender motor appropriate number of steps
     //digitalWrite(bendMotorPls, HIGH);
     //delayMicroseconds (pulseWidth);
     //digitalWrite(bendMotorPls, LOW);
     //delayMicroseconds (pulseDelay);
 
-    moveMotor(bendMotorPls, pulseWidth, pulseDelay);
-  }
+  moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+  //}
 }
 
 void duck (){  //ducks bender pin under wire
