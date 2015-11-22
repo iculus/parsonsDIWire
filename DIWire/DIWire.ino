@@ -39,7 +39,41 @@
  * bend Motor - performs 2D bends by bending wire over
  * benderPin - solenoid
  */
+// pin assignments
+// Motor pulse and solenoid pins
+const int bendMotorPls = 9;
+const int zMotorPls = 10;
+const int feedMotorPls = 11;
+const int benderPin = 12;
 
+// AWO pins to allow motor shaft to free spin
+const int bendMotorAWO = 3;
+const int zMotorAWO = 4;
+const int feedMotorAWO = 5;
+
+// Direction pins to select drive direction
+const int bendMotorDir = 6;
+const int zMotorDir = 7;
+const int feedMotorDir = 8;
+
+//misc program constants
+const int pulseWidth = 20;
+const int pulseDelay = 700;
+
+// Drive directions in english
+boolean ccw = true; // counter-clockwise drive direction
+boolean cw = false; // clockwise drive direction
+boolean curDir = cw; // resets direction before next angle command 
+
+int lastbend = 0;
+int fieldindex=0;
+int values[300]; //creates array
+
+//used in motorrun() function as a marker
+int feedMotorMarker =126; 
+int bendMotorMarker =125; 
+int zMotorMarker =124;
+ 
 void setup() {
   Serial.begin (9600); //com port communication
   pinMode (bendMotorPls, OUTPUT); //Declaring motor pins as out
@@ -95,10 +129,10 @@ void motorrun(){
   int lastbend=0;
   for (int i=0; i<= fieldindex;i++){
     delay (100);
-    if ((values[i]-128)==126){ //convert bytes from processing and look for feed motor marker
+    if ((values[i]-128)==feedMotorMarker){ //convert bytes from processing and look for feed motor marker
       feed (values[i+1]-128);  //if feed motor marker detected next value in array is a feed length
     }
-    else if ((values[i]-128)==125){ //convert bytes from processing and look for bend motor marker
+    else if ((values[i]-128)==bendMotorMarker){ //convert bytes from processing and look for bend motor marker
       int bendAng = (values[i+1]-128);  //if bend motor marker detected next value in array is a bend angle
       if ((bendAng<0&&curDir==cw) || (bendAng>0 && curDir ==ccw)){ //if incoming bend angle is opposite direction from previous angle duck pin
         duck ();
@@ -107,11 +141,12 @@ void motorrun(){
       bend (bendAng);
       lastbend = bendAng;
     }
-    else if ((values[i]-128)==124){ //convert bytes from processing and look for z motor marker
+    else if ((values[i]-128)==zMotorMarker){ //convert bytes from processing and look for z motor marker
       zbend (values[i+1]-128);  //if z motor marker detected next value in array is z bend angle
     }
   }
 }
+
 
 
 
