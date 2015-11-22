@@ -13,7 +13,7 @@ Parsons MFA Industrial Design DIWire bender built from Pensa's open source plans
 
 ## Software Block Diagram
     DIWire.ino
-        maintain syncronization with modules and external control
+        master, maintain syncronization with modules and external control
     BenderPinDuckAndMove.ino
         controls movement of solenoid
     benderPinMovement.ino
@@ -22,4 +22,11 @@ Parsons MFA Industrial Design DIWire bender built from Pensa's open source plans
         advances wire position
     zMotorBend.ino
         3D bend control to be implemented later
-        
+
+    to add later:
+        motor control module
+        2D vector software
+        3D vector software
+        joystick control software 
+        rhinocerous direct drive software
+         
