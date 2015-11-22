@@ -6,4 +6,6 @@ convert points to list
 do math to calculate vectors 
 save list of vectors as text file
 
+vector format (length, /t, xybend, /t, zbend)
+
 in Processing, open text file and execute
