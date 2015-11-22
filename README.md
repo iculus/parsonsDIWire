@@ -19,5 +19,5 @@ Parsons MFA Industrial Design DIWire bender built from Pensa's open source plans
         WireFeed.ino
             advances wire position
         zMotorBend.ino
-            3D bend control 
+            3D bend control to be implemented later
         
