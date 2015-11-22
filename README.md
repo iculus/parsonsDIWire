@@ -1,7 +1,7 @@
 # parsonsDIWire
 Parsons MFA Industrial Design DIWire bender built from Pensa's open source plans
 
-    *Team:
+    Team:
         Tim Ronco
         Joonas Kystila
         Matt Calahan
@@ -11,7 +11,7 @@ Parsons MFA Industrial Design DIWire bender built from Pensa's open source plans
 
 
 
-# Software Block Diagram
+## Software Block Diagram
     DIWire.ino
         maintain syncronization with modules and external control
     BenderPinDuckAndMove.ino
