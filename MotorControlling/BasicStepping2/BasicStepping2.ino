@@ -20,23 +20,29 @@ information about how to connect the driver:
 #include <SPI.h>
 #include <AMIS30543.h>
 
-const uint8_t amisDirPin = 2;      //Dir
-const uint8_t amisStepPin = 3;     //Step
-const uint8_t amisSlaveSelect = 4; //CS
+const uint8_t amisDirPin1 = 2;      //Dir
+const uint8_t amisDirPin2 = 6;      //Dir
+const uint8_t amisStepPin1 = 3;     //Step
+const uint8_t amisSlaveSelect1 = 4; //CS
+const uint8_t amisStepPin2 = 5;
 
 AMIS30543 stepper;
 
 void setup()
 {
   SPI.begin();
-  stepper.init(amisSlaveSelect);
+  stepper.init(amisSlaveSelect1);
+  //stepper.init(amisSlaveSelect2);
 
   // Drive the NXT/STEP and DIR pins low initially.
-  digitalWrite(amisStepPin, LOW);
-  pinMode(amisStepPin, OUTPUT);
-  digitalWrite(amisDirPin, LOW);
-  pinMode(amisDirPin, OUTPUT);
-  pinMode(testSETLOW, INPUT);
+  digitalWrite(amisStepPin1, LOW);
+  pinMode(amisStepPin1, OUTPUT);
+  digitalWrite(amisStepPin2, LOW);
+  pinMode(amisStepPin2, OUTPUT);
+  digitalWrite(amisDirPin1, LOW);
+  pinMode(amisDirPin1, OUTPUT);
+  digitalWrite(amisDirPin2, LOW);
+  pinMode(amisDirPin2, OUTPUT);
   // Give the driver some time to power up.
   delay(1);
 
@@ -75,8 +81,8 @@ void loop()
   }
 
   // Wait for 300 ms.
-  delay(300);
-  //*/
+  //delay(300);
+  
 }
 
 // Sends a pulse on the NXT/STEP pin to tell the driver to take
@@ -84,10 +90,15 @@ void loop()
 void step()
 {
   // The NXT/STEP minimum high pulse width is 2 microseconds.
-  digitalWrite(amisStepPin, HIGH);
+  digitalWrite(amisStepPin1, HIGH);
   delayMicroseconds(3);
-  digitalWrite(amisStepPin, LOW);
+  digitalWrite(amisStepPin1, LOW);
   delayMicroseconds(3);
+  digitalWrite(amisStepPin2, HIGH);
+  delayMicroseconds(3);
+  digitalWrite(amisStepPin2, LOW);
+  delayMicroseconds(3);
+    
 
   // The delay here controls the stepper motor's speed.  You can
   // increase the delay to make the stepper motor go slower.  If
@@ -104,6 +115,6 @@ void setDirection(bool dir)
   // The NXT/STEP pin must not change for at least 0.5
   // microseconds before and after changing the DIR pin.
   delayMicroseconds(1);
-  digitalWrite(amisDirPin, dir);
+  digitalWrite(amisDirPin1, dir);
   delayMicroseconds(1);
 }
