@@ -23,7 +23,7 @@ information about how to connect the driver:
 const uint8_t amisDirPin1 = 2;      //Dir
 const uint8_t amisDirPin2 = 6;      //Dir
 const uint8_t amisStepPin1 = 3;     //Step
-const uint8_t amisSlaveSelect1 = 4; //CS
+const uint8_t amisSlaveSelect = 4;  //CS
 const uint8_t amisStepPin2 = 5;
 
 AMIS30543 stepper;
@@ -31,9 +31,10 @@ AMIS30543 stepper;
 void setup()
 {
   SPI.begin();
-  stepper.init(amisSlaveSelect1);
-  //stepper.init(amisSlaveSelect2);
-
+  //stepper.init(amisSlaveSelect);
+  
+  char myChar = 'A';
+  
   // Drive the NXT/STEP and DIR pins low initially.
   digitalWrite(amisStepPin1, LOW);
   pinMode(amisStepPin1, OUTPUT);
@@ -116,5 +117,6 @@ void setDirection(bool dir)
   // microseconds before and after changing the DIR pin.
   delayMicroseconds(1);
   digitalWrite(amisDirPin1, dir);
+  digitalWrite(amisDirPin2, dir);
   delayMicroseconds(1);
 }
