@@ -151,5 +151,5 @@ void TurnTurnTurn(int amisStepPin, int mX_angle)
   }
 
   // Wait for 300 ms.
-  delay(300);
+  //delay(300);
   }
