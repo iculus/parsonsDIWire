@@ -36,7 +36,7 @@ void setup()
   pinMode(amisStepPin, OUTPUT);
   digitalWrite(amisDirPin, LOW);
   pinMode(amisDirPin, OUTPUT);
-  pinMode(testSETLOW, INPUT);
+//  pinMode(testSETLOW, INPUT);
   // Give the driver some time to power up.
   delay(1);
 
