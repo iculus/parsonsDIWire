@@ -1,5 +1,6 @@
 
 
+
 /* DIWire Bender
  * 3D Wire Bender by Pensa - www.PensaNYC.com
  * Written by Marco Perry. Email DIWire@PensaNYC.com for questions.
@@ -39,22 +40,36 @@
  * bend Motor - performs 2D bends by bending wire over
  * benderPin - solenoid
  */
+
+
+#include <SPI.h>
+#include <AMIS30543.h>
+
+const uint8_t amisDirPin1 = 2;      //Dir
+const uint8_t amisDirPin2 = 6;      //Dir
+const uint8_t amisDirPin3 = 8;      //Dir
+const uint8_t amisStepPin1 = 3;     //Step
+const uint8_t amisStepPin2 = 5;
+const uint8_t amisStepPin3 = 7;
+
 // pin assignments
 // Motor pulse and solenoid pins
-const int bendMotorPls = 9;
-const int zMotorPls = 10;
-const int feedMotorPls = 11;
-const int benderPin = 12;
+const int bendMotorPls = 7;
+const int zMotorPls = 5;
+const int feedMotorPls = 3;
+const int benderPin = 12;  //update later
 
-// AWO pins to allow motor shaft to free spin
+// AWO pins to allow motor shaft to free spin TIM DONT KNOW maybe resolution wires?
 const int bendMotorAWO = 3;
 const int zMotorAWO = 4;
 const int feedMotorAWO = 5;
 
 // Direction pins to select drive direction
-const int bendMotorDir = 6;
-const int zMotorDir = 7;
-const int feedMotorDir = 8;
+const int bendMotorDir = 8;
+const int zMotorDir = 6;
+const int feedMotorDir = 2;
+
+const uint8_t amisSlaveSelect = 4;  //CS added by tim
 
 //misc program constants
 const int pulseWidth = 20;
@@ -94,6 +109,18 @@ void setup() {
   digitalWrite (zMotorAWO, HIGH);
   digitalWrite (feedMotorAWO, HIGH);
   digitalWrite (bendMotorAWO, HIGH);
+
+ //Stepper Motor Initialization
+  AMIS30543 stepper;
+  stepper.init(amisSlaveSelect);      //SPI communication for stepper driver boards
+  delay(1);                           // Give the driver some time to power up.
+  stepper.resetSettings();            // Reset the driver to its default settings.
+  // Set the current limit.  You should change the number here to
+  // an appropriate value for your particular system.
+  stepper.setCurrentMilliamps(1000);
+  // Enable the motor outputs.
+  stepper.enableDriver();
+  
 }
 
 void loop() {
