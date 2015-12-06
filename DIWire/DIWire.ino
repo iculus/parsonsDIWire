@@ -1,5 +1,6 @@
 
 
+
 /* DIWire Bender
  * 3D Wire Bender by Pensa - www.PensaNYC.com
  * Written by Marco Perry. Email DIWire@PensaNYC.com for questions.
@@ -34,11 +35,15 @@
  */
 
 /*
-* Feed Motor 1 - drives wire
+ * Feed Motor 1 - drives wire
  * z Bend Motor - performs 3D bends by rotating entire assembly
  * bend Motor - performs 2D bends by bending wire over
  * benderPin - solenoid
  */
+
+
+
+ 
 // pin assignments
 // Motor pulse and solenoid pins
 const int bendMotorPls = 9;

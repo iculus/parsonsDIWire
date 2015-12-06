@@ -1,4 +1,7 @@
 void bend (float angle) {     //bender pin movement
+    int benderPinAngleA = 6000;
+    int benderPinAngleB = 5960;
+  
   if (angle!=0){              //sets direction of bend based on + or - angle
     Serial.println("bending");
     Serial.println(angle);
@@ -12,15 +15,15 @@ void bend (float angle) {     //bender pin movement
     angle = abs(angle);
     if (angle <= 90){
       angle = -.0012*angle*angle+.5959*angle+.2452; //converts angle into calibrated motor steps 
-      angle = 6000 * (angle/360)+220;
+      angle = benderPinAngleA * (angle/360)+220;  //benderPinAngleA was 6000
     }
     else if (91 <= angle <= 120){
       angle = .0044*angle*angle-.5481*angle+57.981; //converts angle into calibrated motor steps 
-      angle = 5960 * (angle/360)+220;
+      angle = benderPinAngleB * (angle/360)+220;
     }
     else if (121<=angle<=180){
       angle = angle-63.26;  //converts angle into calibrated motor steps 
-      angle = 5960 * (angle/360)+220;
+      angle = benderPinAngleB * (angle/360)+220;
     }   //calibration will differ depending on set up 
     rotations = angle;
     // Serial.println (angle);

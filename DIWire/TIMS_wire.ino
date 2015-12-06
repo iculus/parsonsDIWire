@@ -32,9 +32,9 @@ void setup()
 {
   SPI.begin();
   //stepper.init(amisSlaveSelect);
-
+  
   char myChar = 'A';
-
+  
   // Drive the NXT/STEP and DIR pins low initially.
   digitalWrite(amisStepPin1, LOW);
   pinMode(amisStepPin1, OUTPUT);
@@ -83,7 +83,7 @@ void loop()
 
   // Wait for 300 ms.
   //delay(300);
-
+  
 }
 
 // Sends a pulse on the NXT/STEP pin to tell the driver to take
@@ -99,7 +99,7 @@ void step()
   delayMicroseconds(3);
   digitalWrite(amisStepPin2, LOW);
   delayMicroseconds(3);
-
+    
 
   // The delay here controls the stepper motor's speed.  You can
   // increase the delay to make the stepper motor go slower.  If

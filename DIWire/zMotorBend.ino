@@ -1,4 +1,6 @@
 void zbend (float angle) { //rotates z motor
+    int zBendAngle = 2000;
+  
   if (angle!=0){
     Serial.println("Z bending");
     Serial.println(angle);
@@ -8,7 +10,7 @@ void zbend (float angle) { //rotates z motor
     }
     float rotations = 0;
     angle = abs(angle);
-    angle = (2000 * angle)/360; //converts angle to motor steps
+    angle = (zBendAngle * angle)/360; //converts angle to motor steps //zBendAngle was 2000
     rotations = angle;
     digitalWrite (zMotorDir, dir);  //sets motor direction
     //for (int i=0; i <=rotations  ; i++){ //rotates z motor appropriate number of steps
