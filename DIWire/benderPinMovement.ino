@@ -35,7 +35,7 @@ void bend (float angle) {     //bender pin movement
       //digitalWrite(bendMotorPls, LOW);
       //delayMicroseconds (pulseDelay);
 
-    moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+    //moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
    // }
     delay (100);
     digitalWrite (bendMotorDir, back);   //moves bender pin back to home position ready for next feed
@@ -45,7 +45,10 @@ void bend (float angle) {     //bender pin movement
       //digitalWrite(bendMotorPls, LOW);
       //delayMicroseconds (pulseDelay);
 
-    moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+        setDirection(0);
+    TurnTurnTurn(amisStepPin1, angle);
+    //moveMotor(bendMotorPls, pulseWidth, pulseDelay, rotations);
+    
     //}
   }
 }

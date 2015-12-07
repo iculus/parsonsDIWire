@@ -1,5 +1,7 @@
 
 
+
+
 /* DIWire Bender
  * 3D Wire Bender by Pensa - www.PensaNYC.com
  * Written by Marco Perry. Email DIWire@PensaNYC.com for questions.
@@ -39,6 +41,24 @@
  * bend Motor - performs 2D bends by bending wire over
  * benderPin - solenoid
  */
+#include <SPI.h>
+#include <AMIS30543.h>
+
+const uint8_t amisSlaveSelect = 4;  //CS
+const uint8_t amisDirPin1 = 2;      //Dir
+const uint8_t amisDirPin2 = 6;      //Dir
+const uint8_t amisDirPin3 = 8;      //Dir
+const uint8_t amisStepPin1 = 3;     //Step
+const uint8_t amisStepPin2 = 5;
+const uint8_t amisStepPin3 = 7;
+
+
+int m1_angle = 45;   //angle (degrees) for motor 1 to rotate
+int m2_angle = 180;
+int m3_angle = 90;
+
+AMIS30543 stepper;
+
 // pin assignments
 // Motor pulse and solenoid pins
 const int bendMotorPls = 9;
@@ -74,8 +94,47 @@ int values[300]; //creates array
 int feedMotorMarker =126; 
 int bendMotorMarker =125; 
 int zMotorMarker =124;
- 
+
+#include <SoftwareSerial.h>
+import processing.serial.*;
+Serial myPort;  // Create object from Serial class
+String val;     // Data received from the serial port
+
 void setup() {
+  //Serial Print
+  Serial.begin(9600);
+  Serial.println();
+  SPI.begin();
+  stepper.init(amisSlaveSelect);
+
+  // Drive the NXT/STEP and DIR pins low initially.
+  digitalWrite(amisStepPin1, LOW);
+  pinMode(amisStepPin1, OUTPUT);
+  digitalWrite(amisStepPin2, LOW);
+  pinMode(amisStepPin2, OUTPUT);
+  digitalWrite(amisStepPin3, LOW);
+  pinMode(amisStepPin3, OUTPUT);
+  digitalWrite(amisDirPin1, LOW);
+  pinMode(amisDirPin1, OUTPUT);
+  digitalWrite(amisDirPin2, LOW);
+  pinMode(amisDirPin2, OUTPUT);
+  digitalWrite(amisDirPin3, LOW);
+  pinMode(amisDirPin3, OUTPUT);
+  
+  // Give the driver some time to power up.
+  delay(1);
+
+  // Reset the driver to its default settings.
+  stepper.resetSettings();
+
+  // Set the current limit.  You should change the number here to
+  // an appropriate value for your particular system.
+  stepper.setCurrentMilliamps(1000);
+
+  // Enable the motor outputs.
+  stepper.enableDriver();
+
+
   Serial.begin (9600); //com port communication
   pinMode (bendMotorPls, OUTPUT); //Declaring motor pins as out
   pinMode (zMotorPls, OUTPUT); 
@@ -97,6 +156,24 @@ void setup() {
 }
 
 void loop() {
+Serial.begin(9600);
+  Serial.println();
+
+// I know that the first port in the serial list on my mac
+// is Serial.list()[0].
+// On Windows machines, this generally opens COM1.
+// Open whatever port is the one you're using.
+String portName = Serial.list()[4]; //change the 0 to a 1 or 2 etc. to match your port
+myPort = new Serial(this, portName, 9600); 
+void draw()
+{
+  if ( myPort.available() > 0) 
+  {  // If data is available,
+  val = myPort.readStringUntil('\n');         // read it and store it in val
+  } 
+println(val); //print it out in the console
+}
+
   int copies = 0;
   while (Serial.available ()){ //starts once serial entry made
     digitalWrite (bendMotorAWO, LOW);
@@ -127,13 +204,17 @@ void loop() {
 }
 
 void motorrun(){
+
+  
   int lastbend=0;
   for (int i=0; i<= fieldindex;i++){
     delay (100);
+
+
     if ((values[i]-128)==feedMotorMarker){ //convert bytes from processing and look for feed motor marker
       feed (values[i+1]-128);  //if feed motor marker detected next value in array is a feed length
     }
-    else if ((values[i]-128)==bendMotorMarker){ //convert bytes from processing and look for bend motor marker
+    else if (3(values[i]-128)==bendMotorMarker){ //convert bytes from processing and look for bend motor marker
       int bendAng = (values[i+1]-128);  //if bend motor marker detected next value in array is a bend angle
       if ((bendAng<0&&curDir==cw) || (bendAng>0 && curDir ==ccw)){ //if incoming bend angle is opposite direction from previous angle duck pin
         duck ();
@@ -147,6 +228,7 @@ void motorrun(){
     }
   }
 }
+
 
 
 
