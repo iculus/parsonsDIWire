@@ -35,6 +35,8 @@ import processing.serial.*;
 import geomerative.*;
 Serial arduino;
 
+String val;
+
 
 //Declaring the objects being used to print
 RShape shp;
@@ -50,12 +52,19 @@ int lastpty = 0;
 boolean chngRes = false;
 boolean preview = false;
 
+
 void setup() {
   size (600, 600); //creates window (was 400, 400)
   background (255);
   printArray(Serial.list());
-  arduino = new Serial(this, Serial.list() [0], 9600); //sets arduino usb port
-
+  arduino = new Serial(this, Serial.list() [1], 9600); //sets arduino usb port PREVIOUSLY 0
+  arduino .bufferUntil ('n');
+  
+  /*//code to display the serial data from Arduino
+  arduino.clear();
+  ardSerial = arduino.readStringUntil('\n');
+  ardSerial = null;
+  */
   // VERY IMPORTANT: Allways initialize the library in the setup
   RG.init(this);
   
@@ -79,6 +88,8 @@ void setup() {
 void draw() { 
   translate(width/3, height/4);   // Sets draw location and scale
   noFill();
+
+  
 
 if (!preview) { //draws exact shape from file bendMe.svg
     RG.setPolygonizer(RG.ADAPTATIVE);
@@ -169,12 +180,13 @@ void keyPressed() { //If keys are pressed run corresbonding subroutine
 
 
 //this subroutine accepts feedback from the arduino. It fillis not necessary but sometimes needed to establish initial serial communication
-/*void serialEvent (Serial p) {
+void serialEvent(Serial arduino) {
   String inString = arduino.readStringUntil ('\n'); 
   if (inString !=null) {
     println(inString);
   }
-}*/
+}
+
 
 
 void calcs () {
@@ -235,6 +247,8 @@ void sendArd () { //sends bend angles and feed lengths to the arduino board for 
   println ( "Printing" );
   println ();
 
+  
+    
   //send commands
   for (int i = 2; i < steps; i++) {
     
@@ -252,6 +266,7 @@ void sendArd () { //sends bend angles and feed lengths to the arduino board for 
     delay (100);
     arduino.write (byte(round (-angles[i])));
     println (angles[i]);
+    
   }
   println (end+128); //tells arduino the array of values in complete
   arduino.write(end);

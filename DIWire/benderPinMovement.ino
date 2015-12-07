@@ -3,8 +3,10 @@ void bend (float angle) {     //bender pin movement
     int benderPinAngleB = 5960;
   
   if (angle!=0){              //sets direction of bend based on + or - angle
-    Serial.println("bending");
-    Serial.println(angle);
+    Serial.print("bending");
+    Serial.print('\n');
+    Serial.print(angle);
+    Serial.print('\n');
     boolean dir=cw;
     boolean back=ccw;
     if (angle<0){

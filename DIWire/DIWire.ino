@@ -91,19 +91,16 @@ int fieldindex=0;
 int values[300]; //creates array
 
 //used in motorrun() function as a marker
-int feedMotorMarker =126; 
-int bendMotorMarker =125; 
-int zMotorMarker =124;
-
-#include <SoftwareSerial.h>
-import processing.serial.*;
-Serial myPort;  // Create object from Serial class
-String val;     // Data received from the serial port
+int feedMotorMarker = 126; 
+int bendMotorMarker = 125; 
+int zMotorMarker = 124;
 
 void setup() {
   //Serial Print
   Serial.begin(9600);
   Serial.println();
+  Serial.print("hello");
+  Serial.print('\n');   
   SPI.begin();
   stepper.init(amisSlaveSelect);
 
@@ -134,8 +131,6 @@ void setup() {
   // Enable the motor outputs.
   stepper.enableDriver();
 
-
-  Serial.begin (9600); //com port communication
   pinMode (bendMotorPls, OUTPUT); //Declaring motor pins as out
   pinMode (zMotorPls, OUTPUT); 
   pinMode (feedMotorPls, OUTPUT); 
@@ -156,23 +151,6 @@ void setup() {
 }
 
 void loop() {
-Serial.begin(9600);
-  Serial.println();
-
-// I know that the first port in the serial list on my mac
-// is Serial.list()[0].
-// On Windows machines, this generally opens COM1.
-// Open whatever port is the one you're using.
-String portName = Serial.list()[4]; //change the 0 to a 1 or 2 etc. to match your port
-myPort = new Serial(this, portName, 9600); 
-void draw()
-{
-  if ( myPort.available() > 0) 
-  {  // If data is available,
-  val = myPort.readStringUntil('\n');         // read it and store it in val
-  } 
-println(val); //print it out in the console
-}
 
   int copies = 0;
   while (Serial.available ()){ //starts once serial entry made
@@ -190,7 +168,9 @@ println(val); //print it out in the console
     else{
       Serial.println("END");     //if array end marker inputs from processing end
       for (int i=0; i<=fieldindex;i++){
-        Serial.println(values[i]-128);
+        Serial.print(values[i]-128);
+        Serial.print("test");
+        Serial.print('\n');
       }
       copies=copies+1;
     }
@@ -213,8 +193,10 @@ void motorrun(){
 
     if ((values[i]-128)==feedMotorMarker){ //convert bytes from processing and look for feed motor marker
       feed (values[i+1]-128);  //if feed motor marker detected next value in array is a feed length
+      Serial.println("feed");
     }
-    else if (3(values[i]-128)==bendMotorMarker){ //convert bytes from processing and look for bend motor marker
+    else if ((values[i]-128)==bendMotorMarker){ //convert bytes from processing and look for bend motor marker
+      //removed the numbe three from above before (values
       int bendAng = (values[i+1]-128);  //if bend motor marker detected next value in array is a bend angle
       if ((bendAng<0&&curDir==cw) || (bendAng>0 && curDir ==ccw)){ //if incoming bend angle is opposite direction from previous angle duck pin
         duck ();
