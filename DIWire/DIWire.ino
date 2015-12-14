@@ -98,9 +98,7 @@ int zMotorMarker = 124;
 void setup() {
   //Serial Print
   Serial.begin(9600);
-  Serial.println();
-  Serial.print("hello");
-  Serial.print('\n');   
+  Serial.println();  
   SPI.begin();
   stepper.init(amisSlaveSelect);
 
